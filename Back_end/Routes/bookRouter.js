@@ -1,10 +1,10 @@
 import express from "express";
 const router = express.Router();
 import book from "../model/bookModel.js";
-//import cors from "cors";
+import cors from "cors";
 //app.use(cors());
 
-router.post("/", async (request, response) => {
+router.post("/", cors(), async (request, response) => {
   try {
     if (
       !request.body.title ||
@@ -29,7 +29,7 @@ router.post("/", async (request, response) => {
   }
 });
 
-router.get("/", async (request, response) => {
+router.get("/", cors(), async (request, response) => {
   try {
     const Books = await book.find();
     return response.status(200).json({
@@ -42,7 +42,7 @@ router.get("/", async (request, response) => {
   }
 });
 
-router.get("/:id", async (request, response) => {
+router.get("/:id", cors(), async (request, response) => {
   try {
     const { id } = request.params;
     const Book = await book.findById(id);
@@ -53,7 +53,7 @@ router.get("/:id", async (request, response) => {
   }
 });
 
-router.put("/:id", async (request, response) => {
+router.put("/:id", cors(), async (request, response) => {
   try {
     if (
       !request.body.title ||

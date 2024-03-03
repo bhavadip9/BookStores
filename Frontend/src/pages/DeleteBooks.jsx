@@ -10,9 +10,9 @@ const DeleteBooks = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
-  const handelDeleteBook = () => {
+  const handelDeleteBook = async () => {
     setLoding(true);
-    axios
+    await axios
       .delete(`http://localhost:8000/books/${id}`)
       .then(() => {
         setLoding(false);
