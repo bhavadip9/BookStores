@@ -29,14 +29,14 @@ const EditBooks = () => {
       });
   }, [id]);
 
-  const handelEditBook = () => {
+  const handelEditBook = async () => {
     const data = {
       title,
       author,
       publishYear,
     };
     setLoding(true);
-    axios
+    await axios
       .put(`http://localhost:8000/books/${id}`, data)
       .then(() => {
         setLoding(false);

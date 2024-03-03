@@ -2,7 +2,7 @@ import { PiBookOpenTextLight } from "react-icons/pi";
 import { BiUserCircle } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 
-const BookModel = (book, onClose) => {
+const BookModel = ({ book, onClose }) => {
     return (
         <div
             className="fixed bg-black bg-opacity-60 top-0 right-0 left-0 bottom-0 z-50 flex justify-center items-center"
