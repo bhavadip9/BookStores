@@ -2,27 +2,58 @@ import express from "express";
 const router = express.Router();
 import book from "../model/bookModel.js";
 import cors from "cors";
+import multer from "multer";
+import path from 'node:path';
 
 router.use(cors());
+router.use(express.json());
 
-router.post("/", cors(), async (request, response) => {
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './files')
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now()
+    cb(null, uniqueSuffix + file.originalname)
+  }
+})
+
+const maxSize = 1 * 1000 * 1000;
+var upload = multer({
+  storage: storage,
+  limits: { fileSize: maxSize },
+})
+
+
+router.post("/", upload.single('pdfFile'), async (request, response) => {
+
+  //const filePath = path.join(__dirname, 'upload', req.file.filename);
+  // console.log(__dirname);
+  // console.log(request.file);
+  // console.log(request.file, request.body)
   try {
     if (
       !request.body.title ||
       !request.body.author ||
-      !request.body.publishYear
+      !request.body.publishYear ||
+      !request.file.filename
     ) {
       return response.status(400).send({
         message: "sed all required field :title,author,publishYear",
       });
     }
+
     const newBooks = {
       title: request.body.title,
       author: request.body.author,
       publishYear: request.body.publishYear,
+      fileName: request.file.filename,
+
     };
+    console.log("This is new book Of the :", newBooks);
     const Book = await book.create(newBooks);
-    await Book.save();
+    console.log(Book);
+    response.send({ status: "ok" });
     return response.status(201).send(Book);
   } catch (error) {
     console.log("ok error :", error.message);
@@ -59,7 +90,8 @@ router.put("/:id", cors(), async (request, response) => {
     if (
       !request.body.title ||
       !request.body.author ||
-      !request.body.publishYear
+      !request.body.publishYear ||
+      !request.body.file
     ) {
       return response.status(400).send({
         message: "send all required field :title,author,publishYear",
@@ -92,9 +124,11 @@ router.delete("/:id", cors(), async (request, response) => {
   }
 });
 
+
+
 export default router;
 
-// import express from 'express';
+
 // import Book from "../model/bookModel.js";
 // import cors from "cors"
 

@@ -1,6 +1,6 @@
 import { mongoose } from "mongoose";
 import { mongoDBURL } from "./config";
-import { Books } from "./model/bookModel";
+//import { Books } from "./model/bookModel.js";
 
 mongoose
   .connect(mongoDBURL)

@@ -8,6 +8,7 @@ const EditBooks = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [publishYear, setPublishYear] = useState("");
+  const [file, setPdfFile] = useState("");
   const [loading, setLoding] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
@@ -20,6 +21,7 @@ const EditBooks = () => {
         setTitle(Response.data.title);
         setAuthor(Response.data.author);
         setPublishYear(Response.data.publishYear);
+        setPdfFile(Response.data.file);
         setLoding(false);
       })
       .catch((Error) => {
@@ -27,13 +29,14 @@ const EditBooks = () => {
         setLoding(false);
         alert("An Error hanppen ,Please check console");
       });
-  }, [id]);
+  }, []);
 
   const handelEditBook = async () => {
     const data = {
       title,
       author,
       publishYear,
+      file,
     };
     setLoding(true);
     await axios
@@ -44,7 +47,7 @@ const EditBooks = () => {
         navigate("/");
         // await data.save();
       })
-      .catch((Error) => {
+      .catch((error) => {
         console.log(Error);
         setLoding(false);
         // alert("An error happened ,please Check console");
@@ -85,6 +88,16 @@ const EditBooks = () => {
             name=""
             value={publishYear}
             onChange={(e) => setPublishYear(e.target.value)}
+            className="border-2 border-gray-500 px-4 py-2 w-full"
+          />
+        </div>
+        <div className="my-4">
+          <label className="text-xl mr-4 text-gray-500"> PDF</label>
+          <input
+            type="file"
+            accept="application/pdf"
+            // value={file}
+            onChange={(e) => setPdfFile(e.target.files[0])}
             className="border-2 border-gray-500 px-4 py-2 w-full"
           />
         </div>
