@@ -8,7 +8,7 @@ const Bookscard = ({ books }) => {
 
       {books.map((item) => (
         <BooksSingleCard key={item._id} book={item} />
-        // <BooksSingleCard key={book._id} book={book} />
+
 
 
       ))}

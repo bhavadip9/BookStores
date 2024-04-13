@@ -6,11 +6,7 @@ const bookSchema = new Schema(
     title: { type: String, required: true },
     author: { type: String, required: true },
     publishYear: { type: Number, required: true },
-    // file: {
-    //   filename: String,
-    //   contentType: String
-    // }
-    pdf: { type: String, required: true },
+    cover: String,
   },
   {
     collection: "Books"
